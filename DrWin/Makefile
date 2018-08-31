@@ -2,7 +2,7 @@
 # Makefile created by Dev-C++ 5.11
 
 CPP      = g++ -D__DEBUG__
-CC       = "C:\Program Files (x86)\Dev-Cpp\MinGW32\bin\gcc"  -nostdinc 
+CC       = gcc  -nostdinc 
 WINDRES  = windres.exe
 OBJ      = anim.o blackMarket.o bpaUtil.o cars.o circuit.o config.o dr.o drivers.o externVariables.o graphics.o hallOfFame.o imageUtil.o licenseScreen.o menus.o pedestrian.o popup.o raceParticipant.o raceResults.o savegame.o util.o
 LINKOBJ  = anim.o blackMarket.o bpaUtil.o cars.o circuit.o config.o dr.o drivers.o externVariables.o graphics.o hallOfFame.o imageUtil.o licenseScreen.o menus.o pedestrian.o popup.o raceParticipant.o raceResults.o savegame.o util.o
