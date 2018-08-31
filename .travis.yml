@@ -25,9 +25,5 @@ install:
   - export CXX=$HOST-w64-mingw32-g++
 
 script:
- # - xbuild ./DrWin/DrWin.sln
-  #- if [ $MAKE_BUILD = make ]; then make; fi
-  #- if [ $MAKE_BUILD = debug ]; then make debug; fi
 
-after_script:
   - make -f DrWin/Makefile
