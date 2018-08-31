@@ -25,5 +25,5 @@ install:
   - export CXX=$HOST-w64-mingw32-g++
 
 script:
-
-  - make -f DrWin/Makefile
+  - cd DrWin
+  - make -f Makefile
