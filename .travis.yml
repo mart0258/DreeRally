@@ -26,6 +26,6 @@ install:
 
 script:
   - cd DrWin
-  - ls /opt/mingw$BITSIZE
-  - ls /opt/mingw$BITSIZE/include
+  - ls /opt/mingw32
+  - ls /opt/mingw32/include
   - make -f Makefile
