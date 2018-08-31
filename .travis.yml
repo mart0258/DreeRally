@@ -15,6 +15,7 @@ install:
   - uname -m
   - export QTDIR=/opt/qt54
   - export PATH=$QTDIR/bin:$PATH
+  - sudo apt-get install gcc-mingw-w64
   - export LD_LIBRARY_PATH=$QTDIR/lib/:$QTDIR/lib/`uname -m`-linux-gnu:$LD_LIBRARY_PATH
   - sudo apt-get install -y  mingw32 
   - if [ $BITSIZE == 32 ]; then sudo apt-get install -y mingw32-x-binutils mingw32-x-gcc mingw32-x-runtime; fi
@@ -26,5 +27,6 @@ install:
 
 
 script:
-  - cd DrWin  
+  - cd DrWin
+  - whereis gcc
   - make -f Makefile
