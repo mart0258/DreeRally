@@ -26,4 +26,7 @@ install:
 
 script:
   - cd DrWin
+  - whereis mingw32
+  - ls $HOST-w64-mingw32-gcc
+  - ls $HOST-w64-mingw32-gcc/include
   - make -f Makefile
