@@ -36,15 +36,7 @@ typedef enum
 
 
 
-typedef enum
-{
-	LOANSHARK = 0,
-	MINES = 1,
-	SPIKES = 2,
-	ROCKET = 3,
-	SABOTAGE = 4
-
-}UnderGroundMenu;
 
 
+extern char menuActive_4457F0[];
 char* getMenuText(int menu, int position);

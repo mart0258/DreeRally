@@ -64,6 +64,14 @@ typedef struct GraphicsGeneral {
 	void *facexxBpk; // idb
 } GraphicsGeneral;
 
+extern GraphicsGeneral graphicsGeneral;
+
+extern Graphics4 graphics4;
+
+extern int textureTemp[0xFFFFFu]; // weak
+
+extern void *screenBuffer;
+
 
 void loadGraphics1();
 

@@ -18,6 +18,15 @@ char * menu6[] = { "Accelerate", "Brake", "Steer Left","Steer right","Turbo boos
 char * menu8[] = { "Accelerate", "Brake", "Steer Left","Steer right","Turbo boost","Machine Gun","Drop Mine","Previous menu" };
 
 
+char menuActive_4457F0[] = { '\x01','\x0','\x01','\x01','\x01','\x01','\x01','\x0','\x0',
+						'\x01','\x0','\x0','\x01','\x0','\x01','\x0','\x0','\x0',
+						'\x0','\x0','\x01','\x01','\x1','\x01','\x1','\x1','\x0',
+						'\x1','\x1','\x01','\x01','\x1','\x01','\x0','\x0','\x0',
+						'\x1','\x1','\x01','\x01','\x1','\x0','\x0','\x0','\x0',
+						'\x1','\x1','\x01','\x01','\x1','\x1','\x1','\x1','\x0',
+						'\x1','\x1','\x01','\x01','\x1','\x1','\x1','\x1','\x1',
+						'\x1','\x1','\x01','\x01','\x1','\x1','\x1','\x1','\x0',
+						'\x1','\x1','\x01','\x01','\x1','\x1','\x1','\x1','\x1'			}; // weak
 char* getMenuText(int menu, int position) {
 	
 	switch (menu)

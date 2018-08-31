@@ -28,6 +28,9 @@ typedef struct Car {
 
 } Car;
 
+extern Car cars[6];
+
+extern char* carName[6];
 void initCars();
 
 void initCar0();
@@ -36,7 +39,7 @@ void initCar2();
 void initCar3();
 void initCar4();
 void initCar5();
-
+char * getCarName(int carType);
 
 /*empieza en 44df50 tamaaño 440 *4 int por coche =1760 bytes en total
 

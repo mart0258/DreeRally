@@ -2,11 +2,11 @@
 
 int textureTemp[0xFFFFFu]; // weak
 
-extern GraphicsGeneral graphicsGeneral;
+GraphicsGeneral graphicsGeneral;
 
-extern Graphics4 graphics4;
+Graphics4 graphics4;
 
-
+void *screenBuffer;
 void loadGraphics4()
 {
 	graphics4.badtitBpk = malloc(0x1B80u); // eax@1

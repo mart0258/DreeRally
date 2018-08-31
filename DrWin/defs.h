@@ -68,7 +68,9 @@ typedef int8 _BOOL1;
 typedef int16 _BOOL2;
 typedef int32 _BOOL4;
 
-#ifndef _WINDOWS_
+typedef unsigned char byte;
+
+#ifndef _WINDOWS2_
 typedef int8 BYTE;
 typedef int16 WORD;
 typedef int32 DWORD;

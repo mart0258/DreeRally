@@ -63,6 +63,8 @@ typedef struct Configuration {
 	char defaultMineGamepad; //byte_44512F
 } Configuration;
 
+extern MainArgs mainArgs;
+extern Configuration configuration;
 
 int checkArgs(char * args);
 

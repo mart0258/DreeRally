@@ -51,6 +51,15 @@ typedef struct Driver {
 	
 	
 } Driver;
+
+
+extern Driver drivers[20];
+
+extern int driverId; // weak
+
+extern char driverNames[20][20];
+
+int initDrivers(void); // weak
 char * getDifficultyText(int difficulty);
 int getMaxDriverPoints(int userDriverId);
 

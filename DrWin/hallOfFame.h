@@ -2,7 +2,8 @@
 
 
 
-
+int __cdecl drawRecordByCircuit(int a1);
+int seeHallOfFame();
 
 
 typedef enum {

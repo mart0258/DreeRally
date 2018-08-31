@@ -8,17 +8,27 @@
   }
 }*/
 
-
 typedef enum
 {
-	KEY_DOWN = 0x50,
-	KEY_UP = 0x48,
-	KEY_LEFT = 0x4B,
-	KEY_RIGHT = 0x4D,
-	KEY_ENTER = 0x1C,
 	KEY_ESCAPE = 0x1,
-	KEY_ESPACE = 0x39,
-	KEY_F1 = 0x3B,
+	KEY_TAB = 15,
+	KEY_Y = 21,
+	KEY_P = 25,
+	KEY_ENTER = 0x1C,
+	KEY_N = 49,
+	KEY_F1 = 59,
+	KEY_F2 = 60,
+	KEY_F3 = 61,
+	KEY_F4 = 62,
+	KEY_F5 = 63,
+	KEY_UP = 0x48,
+	KEY_LEFT = 0x4B,	
+	KEY_RIGHT = 0x4D,
+	KEY_DOWN = 0x50,
+	KEY_F6 = 64,
+	KEY_F12 = 88,	//SDLK_F12 cambiar a esto
+	KEY_ESPACE = 0x39
+	
 	
 }Keys;
 

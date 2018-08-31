@@ -1,9 +1,9 @@
 
 #include "cars.h"
 
-extern Car cars[6];
+ Car cars[6];
 
-extern char* carName[6];
+ char* carName[6];
 
 void initCars() {
 	carName[0] = malloc(14);

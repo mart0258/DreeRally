@@ -5,8 +5,8 @@ import struct
 from collections import OrderedDict
 
 
-FILE_NAME = "DR.SG0_decrypted"  #change name to extract other file
-FILE_NAME_DEST = "DR.SG0_crypted"  #change name to extract other file
+FILE_NAME = "DR.SW6_decrypted"  #change name to extract other file
+FILE_NAME_DEST = "DR.SW6_crypted"  #change name to extract other file
 
 
 
