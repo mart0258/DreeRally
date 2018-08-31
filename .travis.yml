@@ -10,11 +10,7 @@ include:
     env: PLATFORM="mingw32" ARCH="x86" BITSIZE=32 HOST="i686"
 
 install:  
-  - sudo add-apt-repository --yes ppa:tobydox/mingw-x-precise            # < MinGW
-  - sudo apt-get update -qq
-  - uname -m
-  - export QTDIR=/opt/qt54
-  - export PATH=$QTDIR/bin:$PATH
+  
   - sudo apt-get install gcc-mingw-w64
   - export LD_LIBRARY_PATH=$QTDIR/lib/:$QTDIR/lib/`uname -m`-linux-gnu:$LD_LIBRARY_PATH
   - sudo apt-get install -y  mingw32 
@@ -28,5 +24,5 @@ install:
 
 script:
   - cd DrWin
-  - whereis gcc
+  - ls /usr/i686-w64-mingw32/include/
   - make -f Makefile
