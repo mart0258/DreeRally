@@ -8,7 +8,7 @@ OBJ      = anim.o blackMarket.o bpaUtil.o cars.o circuit.o config.o dr.o drivers
 LINKOBJ  = anim.o blackMarket.o bpaUtil.o cars.o circuit.o config.o dr.o drivers.o externVariables.o graphics.o hallOfFame.o imageUtil.o licenseScreen.o menus.o pedestrian.o popup.o raceParticipant.o raceResults.o savegame.o util.o
 
 LIBS = -lopengl32 -lglu32 -lmingw32 MINGW32/libs/libSDL.dll.a MINGW32/libs/libSDLmain.a	 MINGW32/libs/fmodvc.lib -static-libstdc++ -static-libgcc  -g3
-INCS     = -I/include -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include" -I"./MINGW32/includes"
+INCS     = -I"/usr/i686-w64-mingw32/include/" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include" -I"./MINGW32/includes"
 CXXINCS  = -I/include -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include/c++"
 BIN      = DrWin.exe
 CXXFLAGS = $(CXXINCS) -g3 -D_WINDOWS2_
