@@ -465,7 +465,7 @@ int outOfMemoryError(void); // weak
 void __cdecl SDL_Quit();
 void __cdecl generateExitError();
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
-int __cdecl sub_43FF90(int *a1, int a2);
+int __cdecl cmdlineToArgs(char *a1, char *a2);
 
 
 //-------------------------------------------------------------------------
@@ -22658,7 +22658,7 @@ void __cdecl sub_41EA70(int a1, int a2, char a3)
   char v3; // al@2
   int i; // ecx@2
 
-  if ( isMultiplayerGame )
+  if ( isMultiplayerGame && dword_45E064)
   {
     v3 = 10 * a3;
     *(byte *)(((*(_WORD *)dword_45E064)++ & 0xFFF) + dword_45E064 + 4) = 10 * a3;
@@ -46176,7 +46176,7 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
   int v12; // ebx@5
 //  int v13; // eax@5
 //  void *v14; // esp@5
-  int v15; // [sp+0h] [bp-Ch]@3
+  char *programName; // [sp+0h] [bp-Ch]@3
 
   ddrawModule = LoadLibraryA(LibFileName);
   if (ddrawModule)
@@ -46185,16 +46185,20 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
   argLenght = strlen(arg) + 1;
   v8 = argLenght - 1 + 4;
   
-  if ( &v15 )
+  programName = malloc(argLenght + 2);
+  if ( programName )
   {
-    SDL_strlcpy(&v15, arg, argLenght);
-    v11 = sub_43FF90(&v15, 0);
+    SDL_strlcpy(programName, arg, argLenght);
+    v11 = cmdlineToArgs(programName, 0);
 	v12 = v11;
    
-    if ( &v15 )
+    if ( programName )
     {
-      sub_43FF90(&v15, (int)&v15);
-      initSystem(fmodMinVersion, v12, (const char **)&v15, arg);
+		char **  programArgs = malloc((v12+1)*sizeof (char*));
+
+      cmdlineToArgs(programName, programArgs);
+
+	  initSystem(fmodMinVersion, v12, (const char **)&programArgs, arg);
       result = 0;
     }
     else
@@ -46210,88 +46214,79 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
 
 //----- (0043FF90) --------------------------------------------------------
-int __cdecl sub_43FF90(int *a1, int a2)
+int __cdecl cmdlineToArgs(char *a1, char **args)
 {
-  int *v2; // esi@1
-  int v3; // ebx@1
-  int v4; // eax@3
-  char v5; // al@8
-  char v6; // al@11
-  char v7; // al@18
-  int v8; // eax@20
-  char v9; // al@27
-  int result; // eax@28
-
+  char *v2; // esi@1
+  int argc; // ebx@1
+  int space; 
+  char ch; // al@11
+  
   v2 = a1;
-  v3 = 0;
+  argc = 0;
   if ( *(byte *)a1 )
   {
     do
     {
       while ( 1 )
       {
-        v4 = _mb_cur_max <= 1 ? pctype[*(byte *)v2] & 8 : _isctype(*(byte *)v2, 8);
-        if ( !v4 )
+		  //v4 = _mb_cur_max <= 1 ? pctype[*(byte *)v2] & _SPACE : _isctype(*(byte *)v2, _SPACE);
+		space = _isctype(*(byte *)v2, _SPACE);
+		if ( !space )
           break;
-        v2 = (int *)((char *)v2 + 1);
+        ++v2;
       }
-      if ( *(byte *)v2 == 34 )
+      if ( *(byte *)v2 == '\"' )
       {
-        v5 = *((byte *)v2 + 1);
-        v2 = (int *)((char *)v2 + 1);
-        if ( !v5 )
+		++v2;
+        if ( ! *v2 )
           break;
-        if ( a2 )
-          *(_DWORD *)(a2 + 4 * v3) = v2;
-        v6 = *(byte *)v2;
-        ++v3;
-        if ( *(byte *)v2 )
+        if ( args )
+          args[argc] = v2;
+		ch = *v2;
+        ++argc;
+		if (ch)
+		{
+			while (ch && ch!='\"')
+			{
+				++v2;
+				ch = *v2;
+			}
+		}
+		++v2; 
+      }
+      else if ( *v2 )
+      {
+        if ( args )
+          args[argc] = v2;
+        ch = *v2;
+        ++argc;
+        if ( ch )
         {
           do
           {
-            if ( v6 == 34 )
+            //if ( _mb_cur_max <= 1 )
+            //  v8 = pctype[v7] & _SPACE;
+            //else
+              space = _isctype(ch, _SPACE);
+            if ( space )
               break;
-            v6 = *((byte *)v2 + 1);
-            v2 = (int *)((char *)v2 + 1);
-          }
-          while ( v6 );
-        }
-      }
-      else if ( *(byte *)v2 )
-      {
-        if ( a2 )
-          *(_DWORD *)(a2 + 4 * v3) = v2;
-        v7 = *(byte *)v2;
-        ++v3;
-        if ( *(byte *)v2 )
-        {
-          do
-          {
-            if ( _mb_cur_max <= 1 )
-              v8 = pctype[v7] & 8;
-            else
-              v8 = _isctype(v7, 8);
-            if ( v8 )
-              break;
-            v7 = *((byte *)v2 + 1);
-            v2 = (int *)((char *)v2 + 1);
-          }
-          while ( v7 );
+            ++v2;
+			ch = *v2;
+		  }
+          while ( ch );
         }
       }
       if ( !*(byte *)v2 )
         break;
-      if ( a2 )
+      if ( args )
         *(byte *)v2 = 0;
-      v9 = *((byte *)v2 + 1);
-      v2 = (int *)((char *)v2 + 1);
+      ++v2;
     }
-    while ( v9 );
+    while ( *v2 );
   }
-  result = v3;
-  if ( a2 )
-    *(_DWORD *)(a2 + 4 * v3) = 0;
-  return result;
+  if (args)
+	  args[argc] = 0;
+  return argc;
 }
 
 //----- (0043B2C0) --------------------------------------------------------
