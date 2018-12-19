@@ -20434,7 +20434,7 @@ int __cdecl refreshMenuUp(int a1)
   int v7; // eax@7
   int v8; // ebp@7
   bool v9; // zf@8
-  int v10; // edx@9
+  int menuPosition; // edx@9
   int v11; // eax@9
   int v12; // edi@9
   signed int v14; // [sp+10h] [bp-10h]@1
@@ -20502,8 +20502,8 @@ int __cdecl refreshMenuUp(int a1)
     --v15;
   }
   while ( !v9 );
-  v10 = dword_445708[v1];
-  v11 = v10 * dword_4456FC[v1];
+  menuPosition = dword_445708[v1];
+  v11 = menuPosition * dword_4456FC[v1];
   v12 = 640 * v11 + 7049;
  /* drawTextWithFont(
     (int)graphicsGeneral.fbig3aBpk,
@@ -20513,7 +20513,7 @@ int __cdecl refreshMenuUp(int a1)
   drawTextWithFont(
 	  (int)graphicsGeneral.fbig3aBpk,
 	  (int)&unk_445848,
-	  getMenuText(a1, v9),
+	  getMenuText(a1, menuPosition),
 	  640 * (v11 + dword_4456F8[v1]) + dword_4456F4[v1] + 3232);
  
   drawImageWithPosition(
@@ -20538,7 +20538,7 @@ int __cdecl refreshMenuDown(int a1)
   int v6; // eax@8
   int v7; // ebp@8
   bool v8; // zf@9
-  int v9; // edx@10
+  int menuPosition; // edx@10
   int v10; // eax@10
   int v11; // edi@10
   signed int v13; // [sp+10h] [bp-10h]@1
@@ -20603,8 +20603,8 @@ int __cdecl refreshMenuDown(int a1)
     --v14;
   }
   while ( !v8 );
-  v9 = dword_445708[v1];
-  v10 = v9 * dword_4456FC[v1];
+  menuPosition = dword_445708[v1];
+  v10 = menuPosition * dword_4456FC[v1];
   v11 = 640 * v10 + 7049;
   /*drawTextWithFont(
 	  (int)graphicsGeneral.fbig3aBpk,
@@ -20614,7 +20614,7 @@ int __cdecl refreshMenuDown(int a1)
   drawTextWithFont(
     (int)graphicsGeneral.fbig3aBpk,
     (int)&unk_445848,
-	  getMenuText(a1, v9 ), 
+	  getMenuText(a1, menuPosition ), 
     640 * (v10 + dword_4456F8[v1]) + dword_4456F4[v1] + 3232);
   drawImageWithPosition(
     (int)((char *)cursorBpk + 400 * cursorBpkFrame),
