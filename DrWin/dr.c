@@ -473,8 +473,8 @@ int __cdecl cmdlineToArgs(char *a1, char *a2);
 
 _UNKNOWN loc_43414A; // weak
   FILE iob[1024];
-  const unsigned __int16 pctype[256];
-  int _mb_cur_max;
+  const unsigned __int16 pctype[256]; // currently unused
+  int _mb_cur_max; // currently unused
 char dukeNukemName[12] = "DUKE NUKEM"; // weak //DUKE
 _UNKNOWN unk_4429C0; // weak
 byte byte_4429E0[28] = //drop mines
@@ -46214,76 +46214,69 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
 
 //----- (0043FF90) --------------------------------------------------------
-int __cdecl cmdlineToArgs(char *a1, char **args)
+int __cdecl cmdlineToArgs(char *cmdline, char **args)
 {
-  char *v2; // esi@1
   int argc; // ebx@1
   int space; 
   char ch; // al@11
   
-  v2 = a1;
   argc = 0;
-  if ( *(byte *)a1 )
+  if ( cmdline )
   {
-    do
+	while (*cmdline)
     {
       while ( 1 )
       {
-		  //v4 = _mb_cur_max <= 1 ? pctype[*(byte *)v2] & _SPACE : _isctype(*(byte *)v2, _SPACE);
-		space = _isctype(*(byte *)v2, _SPACE);
+		space = _isctype(*cmdline, _SPACE);
 		if ( !space )
           break;
-        ++v2;
+        ++cmdline;
       }
-      if ( *(byte *)v2 == '\"' )
+      if ( *cmdline == '\"' )
       {
-		++v2;
-        if ( ! *v2 )
+		++cmdline;
+        if ( ! *cmdline )
           break;
         if ( args )
-          args[argc] = v2;
-		ch = *v2;
+          args[argc] = cmdline;
+		ch = *cmdline;
         ++argc;
 		if (ch)
 		{
 			while (ch && ch!='\"')
 			{
-				++v2;
-				ch = *v2;
+				++cmdline;
+				ch = *cmdline;
 			}
 		}
-		++v2; 
-      }
-      else if ( *v2 )
+      } 
+      else if ( *cmdline )
       {
         if ( args )
-          args[argc] = v2;
-        ch = *v2;
+          args[argc] = cmdline;
+        ch = *cmdline;
         ++argc;
         if ( ch )
         {
           do
           {
-            //if ( _mb_cur_max <= 1 )
-            //  v8 = pctype[v7] & _SPACE;
-            //else
-              space = _isctype(ch, _SPACE);
+            space = _isctype(ch, _SPACE);
             if ( space )
               break;
-            ++v2;
-			ch = *v2;
+            ++cmdline;
+			ch = *cmdline;
 		  }
           while ( ch );
         }
       }
-      if ( !*(byte *)v2 )
+      if ( !*cmdline )
         break;
-      if ( args )
-        *(byte *)v2 = 0;
-      ++v2;
-    }
-    while ( *v2 );
-  }
+      if ( args ) 
+        *cmdline = '\0'; // Replaces space or trailing quote
+      ++cmdline;
+    } 
+  } 
+
   if (args)
 	  args[argc] = 0;
   return argc;
