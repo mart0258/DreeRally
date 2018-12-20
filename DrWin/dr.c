@@ -410,7 +410,7 @@ int sub_43C4B0();
 int freeMusic();
 void __cdecl free(void *Memory);
 void __cdecl logJoystickClose();
-// int __usercall inicializeScreen@<eax>(double a1@<st0>);
+// int __usercall initializeScreen@<eax>(double a1@<st0>);
 signed int SDLCheckJoystick();
 void __cdecl nullsub_1();
 void sub_43C730();
@@ -472,7 +472,7 @@ int __cdecl cmdlineToArgs(char *a1, char *a2);
 // Data declarations
 
 _UNKNOWN loc_43414A; // weak
-  FILE iob[1024];
+  //FILE iob[1024];
   const unsigned __int16 pctype[256]; // currently unused
   int _mb_cur_max; // currently unused
 char dukeNukemName[12] = "DUKE NUKEM"; // weak //DUKE
@@ -41262,7 +41262,7 @@ int  sub_43ACE0(double a1, int a2, int a3,char *args)
   dword_45EA40 = *(_DWORD *)(a3 + 32);
   dword_45EA44 = *(_DWORD *)(a3 + 36);  
   checkArgs(args);
-  inicializeScreen(a1);
+  initializeScreen(a1);
   dword_4A9140 = (int)sub_43ACB0;
   nullsub_1();
   mainMenu();
@@ -43083,7 +43083,7 @@ void __cdecl logJoystickClose()
     SDL_JoystickClose(dword_456C20);
 }
 //----- (0043C51) ----
-int  inicializeScreen(double a1)
+int  initializeScreen(double a1)
 {
   int v1; // esi@1
   SDL_VideoInfo * videoInfo; // eax@12
@@ -46072,7 +46072,7 @@ void sub_43FC72()
 }
 
 //----- (0043FCB6) --------------------------------------------------------
-void __cdecl sub_43FCB6()
+void __cdecl sub_43FCB6() 
 {
   unsigned int i; // [sp+Ch] [bp-1Ch]@1
 
@@ -46105,20 +46105,20 @@ int  initSystem(double fmodMinVersion, int a1, const char **a2, const char *args
   int v13; // eax@12
   int v14; // [sp+0h] [bp-Ch]@7
 
-  v3 = *a2;
-  v4 = strrchr(*a2, 92);
-  if ( v4 || (v4 = strrchr(*a2, 47)) != 0 )
-    v3 = v4 + 1;
-  v5 = strrchr(v3, 46);
-  if ( v5 )
-    v6 = v5 - v3;
-  else
-    v6 = strlen(v3);
-  v7 = v6 + 1;
+  //v3 = *a2;
+  //v4 = strrchr(*a2, '\\');
+  //if ( v4 || (v4 = strrchr(*a2, '/')) != 0 )
+  //  v3 = v4 + 1;
+  //v5 = strrchr(v3, '.');
+  //if ( v5 )
+  //  v6 = v5 - v3;
+  //else
+  //  v6 = strlen(v3);
+  //v7 = v6 + 1;
  
-  if ( &v14 )
+  //if ( &v14 )
   {
-    SDL_strlcpy(&v14, v3, v7);
+    //SDL_strlcpy(&v14, v3, v7);
     if ( SDL_Init(SDL_INIT_NOPARACHUTE) >= 0 )
     {
       atexit(generateExitError);
@@ -46132,10 +46132,10 @@ int  initSystem(double fmodMinVersion, int a1, const char **a2, const char *args
     logError((int)aWinmainError, sdlError);
     result = 0;
   }
-  else
-  {
-    result = outOfMemoryError();
-  }
+  //else
+  //{
+  //  result = outOfMemoryError();
+  //}
   return result;
 }
 
@@ -46143,7 +46143,7 @@ int  initSystem(double fmodMinVersion, int a1, const char **a2, const char *args
 
 int __cdecl logError(int a1, int a2)
 {
-  return fprintf((FILE *)&iob[0] + 2, aSS, a1, a2);
+  return fprintf(stderr, aSS, a1, a2);
   //return fprintf((FILE *)iob[0]._ptr + 2, aSS, a1, a2);
 }
 
@@ -46158,8 +46158,8 @@ int outOfMemoryError()
 
 void __cdecl generateExitError()
 {
-  fclose((FILE *)&iob[0] + 1);
-  fclose((FILE *)&iob[0] + 2);
+  fclose(stdout);
+  fclose(stderr);
 }
 
 
@@ -46168,11 +46168,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
   double fmodMinVersion=3.75; // st7@0
   HMODULE ddrawModule; // eax@1
   const char *arg; // ebx@3
-  unsigned int argLenght; // kr04_4@3
+  unsigned int argLength; // kr04_4@3
   int v8; // eax@3
   
   int result; // eax@4
-  int v11; // eax@5
   int v12; // ebx@5
 //  int v13; // eax@5
 //  void *v14; // esp@5
@@ -46182,23 +46181,22 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
   if (ddrawModule)
     FreeLibrary(ddrawModule);
   arg = GetCommandLineA();
-  argLenght = strlen(arg) + 1;
-  v8 = argLenght - 1 + 4;
+  argLength = strlen(arg) + 1;
+  v8 = argLength - 1 + 4;
   
-  programName = malloc(argLenght + 2);
+  programName = malloc(argLength + 2);
   if ( programName )
   {
-    SDL_strlcpy(programName, arg, argLenght);
-    v11 = cmdlineToArgs(programName, 0);
-	v12 = v11;
-   
+    SDL_strlcpy(programName, arg, argLength);
+    v12 = cmdlineToArgs(programName, 0);
+	
     if ( programName )
     {
 		char **  programArgs = malloc((v12+1)*sizeof (char*));
 
       cmdlineToArgs(programName, programArgs);
 
-	  initSystem(fmodMinVersion, v12, (const char **)&programArgs, arg);
+	  initSystem(fmodMinVersion, v12, programArgs, arg);
       result = 0;
     }
     else
