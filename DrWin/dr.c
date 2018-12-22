@@ -347,7 +347,7 @@ void startRacingMenu();
 int mainMenu(void); // weak
 
 
-void __noreturn sub_43ACB0();
+void __noreturn exitCtrlAltDel2();
 
 void *__cdecl sub_43AD80(int a1);
 void __cdecl sub_43ADD0(void *Memory);
@@ -1659,15 +1659,15 @@ int isMultiplayerGame; // weak
 int dword_45EA08; // weak
 int dword_45EA0C; // weak
 char *Str2; // idb
-int dword_45EA24; // weak
-int dword_45EA28; // weak
-int dword_45EA2C; // weak
-int dword_45EA30; // weak
-int dword_45EA34; // weak
-int dword_45EA38; // weak
-int dword_45EA3C; // weak
-int dword_45EA40; // weak
-int dword_45EA44; // weak
+//int dword_45EA24; // weak - command line argument, but not used directly. 
+//int dword_45EA28; // weak
+//int dword_45EA2C; // weak
+//int dword_45EA30; // weak
+//int dword_45EA34; // weak
+//int dword_45EA38; // weak
+//int dword_45EA3C; // weak
+//int dword_45EA40; // weak
+//int dword_45EA44; // weak
 char raceFilePrefix_45EA50[4]; // weak
 void *slidcop2Bpk; // idb
 int dword_45EA64; // weak
@@ -3285,7 +3285,7 @@ float flt_4A8C00[256]; // weak
 int dword_4A8D2C; // weak
 int trxSHA7Bpk_4A8D40[1024]; // weak
 _UNKNOWN unk_4A8DD0; // weak
-int dword_4A9140; // weak
+void (*ctrlAltDelCallback)();
 char smalfo4aBpk_4A9160[924]; // weak
 float flt_4A9A60[256]; // weak
 int dword_4A9B8C; // weak
@@ -9106,7 +9106,7 @@ int sub_407330()
 
 //----- (00409270) --------------------------------------------------------
 void __noreturn exitCtrlAltDel()
-{
+{ // TODO: Redundant/duplicate function
   nullsub_1();
   freeMusic();
   setWindowCaption();
@@ -17566,7 +17566,7 @@ void __cdecl startRace(int a1, int numberOfParticipants)
   v40 = malloc(0xC0u);
   smokeBpk = v40;
   noMemExitScreen(); //esto no sale del juego
-  dword_4A9140 = (int)exitCtrlAltDel;
+  ctrlAltDelCallback = (int)exitCtrlAltDel;
   loadRaceImages();
   sub_409F90();
   sub_4022A0();
@@ -29959,7 +29959,7 @@ int sub_429DC0()
 
 //----- (00429F70) --------------------------------------------------------
 void __noreturn exitGame()
-{
+{ // TODO: Redundant/duplicate function
   saveConfiguration();
   freeMemoryGraphics();
   freeMemoryGraphics1();
@@ -40819,7 +40819,7 @@ int mainMenu()
   initCars();
   initDrivers();
   loadConfig();
-  dword_4A9140 = (int)exitGame;
+  ctrlAltDelCallback = (int)exitGame;
   ++configuration.timesPlayed;
   saveConfiguration();
   printf("\nLoading music & effects, please wait..\n");
@@ -41234,8 +41234,8 @@ LABEL_76:
 }
 
 //----- (0043ACB0) --------------------------------------------------------
-void __noreturn sub_43ACB0()
-{
+void __noreturn exitCtrlAltDel2()
+{ // TODO: Redundant/duplicate function
   nullsub_1();
   setWindowCaption();
   printf("DEATH RALLY Exit: CTRL+ALT+DEL pressed!\n");
@@ -41248,22 +41248,22 @@ void __noreturn sub_43ACB0()
 
 
 //----- (0043ACE0) --------------------------------------------------------
-int  sub_43ACE0(double a1, int a2, int a3,char *args)
+int initGame(double fmodMinVersion, int argc, int argv,char *args)
 {
-  dword_45EA0C = a2;
+  /*dword_45EA0C = argc;
  
-  dword_45EA24 = *(_DWORD *)(a3 + 4);
-  dword_45EA28 = *(_DWORD *)(a3 + 8);
-  dword_45EA2C = *(_DWORD *)(a3 + 12);
-  dword_45EA30 = *(_DWORD *)(a3 + 16);
-  dword_45EA34 = *(_DWORD *)(a3 + 20);
-  dword_45EA38 = *(_DWORD *)(a3 + 24);
-  dword_45EA3C = *(_DWORD *)(a3 + 28);
-  dword_45EA40 = *(_DWORD *)(a3 + 32);
-  dword_45EA44 = *(_DWORD *)(a3 + 36);  
+  dword_45EA24 = *(_DWORD *)(argv + 4);
+  dword_45EA28 = *(_DWORD *)(argv + 8);
+  dword_45EA2C = *(_DWORD *)(argv + 12);
+  dword_45EA30 = *(_DWORD *)(argv + 16);
+  dword_45EA34 = *(_DWORD *)(argv + 20);
+  dword_45EA38 = *(_DWORD *)(argv + 24);
+  dword_45EA3C = *(_DWORD *)(argv + 28);
+  dword_45EA40 = *(_DWORD *)(argv + 32);
+  dword_45EA44 = *(_DWORD *)(argv + 36);  */
   checkArgs(args);
-  initializeScreen(a1);
-  dword_4A9140 = (int)sub_43ACB0;
+  initializeScreen(fmodMinVersion);
+  ctrlAltDelCallback = (int)exitCtrlAltDel2;
   nullsub_1();
   mainMenu();
   nullsub_1();
@@ -46125,7 +46125,7 @@ int  initSystem(double fmodMinVersion, int a1, const char **a2, const char *args
       atexit(SDL_Quit);
       v12 = GetModuleHandleA(0);
       SDL_SetModuleHandle(v12);
-      v13 = sub_43ACE0(fmodMinVersion, a1, (int)a2, args);
+      v13 = initGame(fmodMinVersion, a1, (int)a2, args);
       exit(v13);
     }
     sdlError = SDL_GetError();
