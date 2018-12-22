@@ -698,7 +698,7 @@ int dword_4467E6 = 2004053569; // weak
 int dword_4467EA = 1293972069; // weak
 int dword_4467EE = 1835361391; // weak
 char byte_4467F2 = '\0'; // weak
-char aGamepadDisable[17] = "Gamepad Disabled"; // weak
+//char aGamepadDisable[26] = "Gamepad Disabled"; // weak
 _UNKNOWN unk_446C32; // weak
 
 _UNKNOWN unk_446DC2; // weak
@@ -34749,7 +34749,7 @@ LABEL_2:
         {
           configuration.useJoystick = 0;
 LABEL_58:
-          memcpy(aGamepadDisable, "Gamepad/Joystick Disabled", 0x1Au);
+          //memcpy(aGamepadDisable, "Gamepad/Joystick Disabled", 0x1Au);
           goto LABEL_2;
         }
         configuration.useJoystick = 1;
@@ -34757,7 +34757,7 @@ LABEL_58:
         if ( !configuration.useJoystick )
           sub_41E3B0();
         configJoystick();
-        memcpy(aGamepadDisable, "Gamepad/Joystick Enabled", 0x19u);
+        //memcpy(aGamepadDisable, "Gamepad/Joystick Enabled", 0x19u);
         if ( !configuration.useJoystick )
           goto LABEL_58;
         break;
@@ -40844,11 +40844,11 @@ int mainMenu()
   if ( configuration.useJoystick == 1 || configuration.useJoystick == 2 )
   {
     configJoystick();
-    memcpy(aGamepadDisable, "Gamepad/Joystick Enabled", 0x19u);
+    //memcpy(aGamepadDisable, "Gamepad/Joystick Enabled", 0x19u);
   }
   else
   {
-    memcpy(aGamepadDisable, "Gamepad/Joystick Disabled", 0x1Au);
+    //memcpy(aGamepadDisable, "Gamepad/Joystick Disabled", 0x1Au);
   }
   if ( !configuration.dword_456734 )
   {

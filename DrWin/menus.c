@@ -1,20 +1,24 @@
 #include "menus.h"
 #include "util.h"
 #include "savegame.h"
+#include "config.h"
 
 #include <stdio.h>
 
+extern Configuration configuration;
+
 char * menu0[] = { "Start Racing", "Multiplayer Race", "Configure","See hall of fame","Credits","Exit to OS" };
 char * menu1[] = { "Start a new game", "End current Game", "See current Stadistics","Load game","save game","Previous menu" };
-
-
-char * menu3[] = { "Music volume", "Effect volume", "define Keyboard","Define Gamepad/Joystick","Gamepad/Joystick Disabled","Previous menu" };
-
+char * menu3[] = { 
+	"Music volume", 
+	"Effect volume", 
+	"define Keyboard",
+	"Define Gamepad/Joystick",
+	"Gamepad/Joystick Disabled",
+	"Previous menu" };
 
 char * menu5[] = { "Empty slot", "Empty slot", "Empty slot","Empty slot","Empty slot","Empty slot","Empty slot","Quicksave slot" };
-
 char * menu6[] = { "Accelerate", "Brake", "Steer Left","Steer right","Turbo boost","Machine Gun","Drop Mine","Horn","Previous menu" };
-
 char * menu8[] = { "Accelerate", "Brake", "Steer Left","Steer right","Turbo boost","Machine Gun","Drop Mine","Previous menu" };
 
 
@@ -33,6 +37,8 @@ char* getMenuText(int menu, int position) {
 		break;
 	
 	case CONFIGURE_MENU://
+		if (position == 4 && configuration.useJoystick)
+			return "Gamepad/Joystick Enabled";
 		return menu3[position];
 		break;
 	case LOAD_MENU://
@@ -60,3 +66,4 @@ char* getMenuText(int menu, int position) {
 	}
 
 }
+
