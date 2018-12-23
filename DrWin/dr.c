@@ -1673,11 +1673,11 @@ void *slidcop2Bpk; // idb
 int dword_45EA64; // weak
 
 void *fasesel1Bpk; // idb
-int dword_45EA80; // weak
-int dword_45EA84; // weak
-int dword_45EA88; // weak
-int dword_45EA8C; // weak
-int dword_45EA90; // weak
+char raceParticipantPool[20]; // weak
+//int dword_45EA84; // weak
+//int dword_45EA88; // weak
+//int dword_45EA8C; // weak
+//int dword_45EA90; // weak
 
 size_t Size; // idb
 void *chatlin1Bpk; // idb
@@ -25452,13 +25452,13 @@ void __cdecl addParticipantToRace(signed int a1)
           while ( v6 && v6 != 1 && v6 != 2 && v4 < 100 );
         }
       }
-      while ( *((byte *)&dword_45EA80 + v3) == 1 );
+      while ( raceParticipantPool[v3] == 1 );
       v14 = participantsRace[race];
 	  //v14 = *((byte *)&word_461EB4 + race);
 	  
       v15 = v3;
 	  //v15 = 108 * v3;
-      *((byte *)&dword_45EA80 + v3) = 1;
+	  raceParticipantPool[v3] = 1;
 	  
 	  racePositions[race][v14] = v3;
 	  //*((byte *)&dword_45EB50[race] + v14) = v3;
@@ -25778,10 +25778,11 @@ int calculateNextRaces()
     byte_461F00[v3++] = v4;
   }
   while ( v3 < 14 );
-  dword_45EA80 = 0;
-  dword_45EA84 = 0;
-  dword_45EA88 = 0;
-  dword_45EA8C = 0;
+  //raceParticipantPool = 0;
+  for (int i = 0; i < 20; ++i) raceParticipantPool[i] = 0;
+  //dword_45EA84 = 0;
+  //dword_45EA88 = 0;
+  //dword_45EA8C = 0;
   //dword_45EB50[0] = 0;
   //dword_45EB54 = 0;
   // dword_45EB58 = 0;
@@ -25803,8 +25804,8 @@ int calculateNextRaces()
   participantsRace[1] = 0;
   participantsRace[2] = 0;
   //dword_45EB54 = 0;
-  dword_45EA90 = 0;
-  v0[(_DWORD)&dword_45EA80] = 1;
+  //dword_45EA90 = 0;
+  v0[(_DWORD)&raceParticipantPool] = 1;
   
  
   do
@@ -35840,6 +35841,7 @@ void __cdecl previewRaceScreen(signed int participants)
 
   int raceIdParticipants[4];
   int v244; // [sp+20h] [bp-D4h]@73
+  char Str_v244[32]; // Sotirng "tshape" string here.  
   int v245; // [sp+24h] [bp-D0h]@88
   int v246; // [sp+28h] [bp-CCh]@16
   char Str[16]; // [sp+2Ch] [bp-C8h]@14
@@ -36022,13 +36024,13 @@ void __cdecl previewRaceScreen(signed int participants)
 	raceParticipant[0].isCircuitReversed_4A7AA8 = (unsigned __int8)circuitsToSelect_46126C[selectedRace_462CE8] > 8u;
     switch ( selectedRace_462CE8 )
     {
-      case 0:
+      case 0: // EIP=432578
        /* v24 = &aTshape01[9 * (unsigned __int8)circuitsToSelect_46126C[0]];
         v25 = &Str[-9 * (unsigned __int8)circuitsToSelect_46126C[0]] - aTshape01;
         do
         {
           v26 = *v24;
-          v24[v25] = *v24;
+          v24[v25] = *v24;  // [eax+edx] = 19fcb4, esp=19fc94... v24[v25] is aimed at v244. 
           ++v24;
         }
         while ( v26 );
@@ -36052,12 +36054,14 @@ void __cdecl previewRaceScreen(signed int participants)
 		strcpy(raceFilePrefix_45EA50, "TR");
 		itoa((circuitsToSelect_46126C[0]%9)+1, &DstBuf, 10);
 		strcat(raceFilePrefix_45EA50, &DstBuf);
-        v30 = (char *)&raceFilePrefix_45EA50[-(unsigned __int8)circuitsToSelect_46126C[0]] - (char *)&v251;
+        //v30 = (char *)&raceFilePrefix_45EA50[-(unsigned __int8)circuitsToSelect_46126C[0]] - (char *)&v251;
+		v30 = Str_v244; 
         do
         {
           v31 = *(byte *)v29;
-          *((byte *)v29 + v30) = *(byte *)v29;
+          *((byte *)v30) = *(byte *)v29;
           v29 = (int *)((char *)v29 + 1);
+		  v30++;
         }
         while ( v31 );
         numberOfLaps = 4;
