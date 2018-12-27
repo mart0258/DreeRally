@@ -12,7 +12,6 @@ void initCars() {
 	carName[3] = malloc(14);
 	carName[4] = malloc(14);
 	carName[5] = malloc(14);
-	carName[6] = malloc(14);
 	strcpy(carName[0],"KUPLA");
 	strcpy(carName[1], "PICKUP");
 	strcpy(carName[2], "SEDAN");
