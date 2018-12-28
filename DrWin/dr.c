@@ -313,7 +313,7 @@ char sub_42C4A0();
 char __cdecl sub_42C560(int a1);
 int __cdecl sub_42C670(int a1);
 char sub_42C780();
-int __cdecl sub_42C7F0(int a1, int a2, int a3, int a4, int a5, int a6);
+int __cdecl drawTextCursor(int a1, int a2, int a3, int a4, int a5, int a6);
 char sub_42C940();
 char sub_42CBF0();
 int sub_42CCF0(void); // weak
@@ -1538,7 +1538,6 @@ int lapped_456BC0 = 0; // weak
 int useHasMorePoints_456BC4 = 0; // weak
 int dword_456BC8 = 0; // idb
 int dword_456BCC = 0; // weak
-int dword_456BD0 = 0; // weak
 int dword_456BD4 = 0; // weak
 int dword_456BD8 = 0; // weak
 int userLasRacePriceIncome_456BDC = 0; // weak
@@ -1598,7 +1597,7 @@ _UNKNOWN unk_456CF4; // weak
 _UNKNOWN unk_4582C0; // weak
 int dword_45C4C0; // weak
 int dword_45C4C4; // weak
-_UNKNOWN unk_45C4E0; // weak
+_UNKNOWN unk_45C4E0[172*256]; // weak
 int dword_45C4E4[256]; // weak   //esto tiene la direccion de memoria 456CC0
 _UNKNOWN unk_45C4F4; // weak
 _UNKNOWN unk_45C546; // weak
@@ -2499,7 +2498,6 @@ void *choo2Bpk; // idb
 char showEndAnim_463DF8; // weak
 char byte_463E00[256]; // weak
 int dword_463E08; // weak
-_UNKNOWN unk_463E20; // weak
 int dword_463E2D; // weak
 int trxSCE3Bpk_464F10; // weak
 int dword_464F14; // weak
@@ -2524,7 +2522,7 @@ _UNKNOWN unk_4669C0; // weak
 int trxVARJOTab_466F00[257]; // weak
 int dword_467000; // weak
 int dword_467020[256]; // weak
-char bugnum6Bpk_46E560[433]; // weak
+char bugnum6Bpk_46E560[880]; // weak
 _UNKNOWN unk_46E880; // weak
 int dword_46E8D0[256]; // weak
 int dword_46E8D4; // weak
@@ -16798,7 +16796,7 @@ int sub_414220()
     v67 = 9;
     do
     {
-      //memcpy((void *)(v20 + dword_464F14 + dword_456AA0 + 69728), (char *)damslidBpk + HIDWORD(v19) + 64, v19);
+      memcpy((void *)(v20 + dword_464F14 + dword_456AA0 + 69728), (char *)damslidBpk + HIDWORD(v19) + 64, v19);
       HIDWORD(v19) += 64;
       v20 += 512;
       --v67;
@@ -16816,7 +16814,7 @@ int sub_414220()
     v68 = 9;
     do
     {
-      //memcpy((void *)(v22 + dword_464F14 + dword_456AA0 + 86112), (char *)damslidBpk + HIDWORD(v21) + 64, v21);
+      memcpy((void *)(v22 + dword_464F14 + dword_456AA0 + 86112), (char *)damslidBpk + HIDWORD(v21) + 64, v21);
       HIDWORD(v21) += 64;
       v22 += 512;
       --v68;
@@ -18629,6 +18627,7 @@ int __cdecl getFileSizeFromBpa(char *bpaFile, char * filename)
   int v26; // [sp+2Ch] [bp-4Ch]@9
   int v27; // [sp+30h] [bp-48h]@9
   int v28; // [sp+34h] [bp-44h]@9
+  _UNKNOWN unk_463E20[0x10f0]; // weak
 
   v2 = filename;
   strcpy(fileNameUpper, (const char *)filename);
@@ -31833,8 +31832,9 @@ char sub_42C780()
 }
 
 //----- (0042C7F0) --------------------------------------------------------
-int __cdecl sub_42C7F0(int a1, int a2, int a3, int a4, int a5, int a6)
+int __cdecl drawTextCursor(int a1, int a2, int dx, int a4, int a5, int a6)
 {
+  static int cursorTimer = 0; // weak
   bool v6; // zf@1
   bool v7; // sf@1
   unsigned __int8 v8; // of@1
@@ -31844,12 +31844,12 @@ int __cdecl sub_42C7F0(int a1, int a2, int a3, int a4, int a5, int a6)
   int result; // eax@8
 
   sub_42A570();
-  v8 = __OFSUB__(dword_456BD0 + 1, 10);
-  v6 = dword_456BD0 == 9;
-  v7 = dword_456BD0++ - 9 < 0;
+  v8 = __OFSUB__(cursorTimer + 1, 10);
+  v6 = cursorTimer == 9;
+  v7 = cursorTimer++ - 9 < 0;
   if ( (unsigned __int8)(v7 ^ v8) | v6 )
   {
-    drawTextWithFont((int)fbig3bBpk, (int)&unk_445848, (const char *)&unk_443C40, a3 + a1 + 640 * a2);
+    drawTextWithFont((int)fbig3bBpk, (int)&unk_445848, (const char *)&unk_443C40, dx + a1 + 640 * a2);
   }
   else
   {
@@ -31857,8 +31857,8 @@ int __cdecl sub_42C7F0(int a1, int a2, int a3, int a4, int a5, int a6)
     v10 = 30;
     do
     {
-      v11 = (char *)screenBuffer + v9 + a1 + a3;
-      *(_DWORD *)v11 = -993737532;
+      v11 = (char *)screenBuffer + v9 + a1 + dx;
+	  *(_DWORD *)v11 = -993737532; // 0xc4c4c4c4
       *((_DWORD *)v11 + 1) = -993737532;
       *((_DWORD *)v11 + 2) = -993737532;
       *((_DWORD *)v11 + 3) = -993737532;
@@ -31868,9 +31868,9 @@ int __cdecl sub_42C7F0(int a1, int a2, int a3, int a4, int a5, int a6)
     }
     while ( v10 );
   }
-  if ( dword_456BD0 > 20 )
-    dword_456BD0 = 0;
-  drawKeyCursor(a3 + a1 + 640 * a2, (char *)screenBuffer + 640 * a2 + a1 + a3, 0x14u, 32);
+  if ( cursorTimer > 20 )
+    cursorTimer = 0;
+  drawKeyCursor(dx + a1 + 640 * a2, (char *)screenBuffer + 640 * a2 + a1 + dx, 0x14u, 32);
   result = dword_456BD4;
   if ( dword_456BD4 )
   {
@@ -31897,7 +31897,7 @@ int __cdecl sub_42C7F0(int a1, int a2, int a3, int a4, int a5, int a6)
   return result;
 }
 // 445968: using guessed type int carAnimFrameSize_45FBA0[];
-// 456BD0: using guessed type int dword_456BD0;
+// 456BD0: using guessed type int cursorTimer;
 // 456BD4: using guessed type int dword_456BD4;
 // 45FBA0: using guessed type int carAnimCurrentFrame_45FBA0;
 
@@ -33325,7 +33325,7 @@ signed int __cdecl readKeyboard(const char *a1, int a2, int a3, int a4, unsigned
 
 	  a++;
 	 face = initialFace;
-    sub_42C7F0(a2, a3, cursorOffsetX, v13, 63, 112);
+    drawTextCursor(a2, a3, cursorOffsetX, v13, 63, 112);
     v15 = eventDetected();
     v16 = (unsigned __int8)v15;
     v71 = (unsigned __int8)v15;
@@ -33349,7 +33349,7 @@ signed int __cdecl readKeyboard(const char *a1, int a2, int a3, int a4, unsigned
           v17 = 5;
           do
           {
-            sub_42C7F0(a2, a3, cursorOffsetX, v13, 63, 112);
+            drawTextCursor(a2, a3, cursorOffsetX, v13, 63, 112);
             --v17;
           }
           while ( v17 );
@@ -33358,7 +33358,7 @@ signed int __cdecl readKeyboard(const char *a1, int a2, int a3, int a4, unsigned
           v18 = 5;
           do
           {
-            sub_42C7F0(a2, a3, cursorOffsetX, v13, 63, 112);
+            drawTextCursor(a2, a3, cursorOffsetX, v13, 63, 112);
             --v18;
           }
           while ( v18 );
@@ -33382,7 +33382,7 @@ signed int __cdecl readKeyboard(const char *a1, int a2, int a3, int a4, unsigned
           v19 = 5;
           do
           {
-            sub_42C7F0(a2, a3, cursorOffsetX, v13, 63, 112);
+            drawTextCursor(a2, a3, cursorOffsetX, v13, 63, 112);
             --v19;
           }
           while ( v19 );
@@ -33391,7 +33391,7 @@ signed int __cdecl readKeyboard(const char *a1, int a2, int a3, int a4, unsigned
           v20 = 5;
           do
           {
-            sub_42C7F0(a2, a3, cursorOffsetX, v13, 63, 112);
+            drawTextCursor(a2, a3, cursorOffsetX, v13, 63, 112);
             --v20;
           }
           while ( v20 );
@@ -35346,7 +35346,7 @@ int showHitmanScreen()
   if ( isDemo_456B10 )
     return 0;
   v40 = 1;
-  if ( 1 || rand() % 100 < dword_45678C && useWeapons )
+  if (rand() % 100 < dword_45678C && useWeapons )
   {
     dword_45678C = 5;
     if ( rand() % 100 >= 50 )
@@ -42635,10 +42635,10 @@ int __cdecl drawImageWithPosition2(int texture, int height, int width, int scree
 }
 
 //----- (0043BF90) --------------------------------------------------------
-int __cdecl drawImageWithPosition(int icon, int width, int height, int pscreenBufferPos)
+int __cdecl drawImageWithPosition(char *icon, int width, int height, int pscreenBufferPos)
 {
   int result; // eax@1
-  int screenIcon; // edx@1
+  char * screenIcon; // edx@1
   int screenPos; // ecx@1
   int v7; // ebx@2
   int v8; // esi@4
@@ -43486,10 +43486,10 @@ LABEL_28:
 }
 
 //----- (0043CB90) --------------------------------------------------------
-void __cdecl copyImageToBuffer(int a1, int a2)
+void __cdecl copyImageToBuffer(int src, int dest)
 {
 
- decryptTexture(a1, a2, 0, 0x40000000);
+ decryptTexture(src, dest, 0, 0x40000000);
 }
 
 //----- (0043CBB0) --------------------------------------------------------
@@ -45396,14 +45396,14 @@ unsigned __int64 __cdecl sub_43EBD0(int a1, signed int a2)
   char *v2; // esi@1
   unsigned __int64 result; // rax@1
 
-  v2 = (char *)&unk_45C4E0 + 172 * a1;
+  v2 = (char *)unk_45C4E0 + 172 * a1;
   result = (unsigned __int64)(7680.0
                             - ((double)a2 * 0.000015258789 * 6.0
                              + 52.0
                              - 6.0
-                             + (double)*(byte *)(*((_DWORD *)v2 + 2) + 31))
+                             + (double)(*((_DWORD *)v2 + 2) + 31))
                             * 64.0
-                            - (double)(*(byte *)(*((_DWORD *)v2 + 2) + 17) / 2));
+                            - (double)((*((_DWORD *)v2 + 2) + 17) / 2));
   *((_DWORD *)v2 + 26) = result;
   *((_DWORD *)v2 + 3) = result;
   return result;
